@@ -10,23 +10,30 @@
 #                                                                              #
 # **************************************************************************** #
 
-FILES = ft_isascii.c    ft_memmove.c    ft_split.c      ft_strlcat.c \
- ft_atoi.c       ft_isdigit.c    ft_memset.c     ft_strchr.c     ft_strlcpy.c    ft_strtrim.c \
- ft_bzero.c      ft_isprint.c    ft_putchar_fd.c  ft_strlen.c     ft_substr.c    ft_strrchr.c\
- ft_calloc.c     ft_itoa.c       ft_putendl_fd.c ft_strdup.c     ft_strmapi.c    ft_toupper.c \
- ft_isalnum.c    ft_memcmp.c 	ft_striteri.c   ft_strncmp.c	ft_strnstr.c   ft_memchr.c \
- ft_isalpha.c    ft_memcpy.c     ft_putstr_fd.c  ft_strjoin.c 	 ft_tolower.c  ft_putnbr_fd.c \
+MANDATORY_FILES = mandatory/ft_isascii.c mandatory/ft_memmove.c mandatory/ft_split.c \
+	mandatory/ft_strlcat.c mandatory/ft_atoi.c mandatory/ft_isdigit.c \
+	mandatory/ft_memset.c mandatory/ft_strchr.c mandatory/ft_strlcpy.c \
+	mandatory/ft_strtrim.c mandatory/ft_bzero.c mandatory/ft_isprint.c \
+	mandatory/ft_putchar_fd.c mandatory/ft_strlen.c mandatory/ft_substr.c \
+	mandatory/ft_strrchr.c mandatory/ft_calloc.c mandatory/ft_itoa.c \
+	mandatory/ft_putendl_fd.c mandatory/ft_strdup.c mandatory/ft_strmapi.c \
+	mandatory/ft_toupper.c mandatory/ft_isalnum.c mandatory/ft_memcmp.c \
+	mandatory/ft_striteri.c mandatory/ft_strncmp.c mandatory/ft_strnstr.c \
+	mandatory/ft_memchr.c mandatory/ft_isalpha.c mandatory/ft_memcpy.c \
+	mandatory/ft_putstr_fd.c mandatory/ft_strjoin.c mandatory/ft_tolower.c \
+	mandatory/ft_putnbr_fd.c
 
-BONUS_FILES = ft_lstclear_bonus.c ft_lstiter_bonus.c ft_lstsize_bonus.c 	ft_lstadd_front_bonus.c \
-				ft_lstdelone_bonus.c	 ft_lstmap_bonus.c    ft_lstadd_back_bonus.c  ft_lstnew_bonus.c  ft_lstlast_bonus.c \
-				
-OBJF = $(FILES:.c=.o)
+BONUS_FILES = bonus/ft_lstclear_bonus.c bonus/ft_lstiter_bonus.c \
+	bonus/ft_lstsize_bonus.c bonus/ft_lstadd_front_bonus.c \
+	bonus/ft_lstdelone_bonus.c bonus/ft_lstmap_bonus.c \
+	bonus/ft_lstadd_back_bonus.c bonus/ft_lstnew_bonus.c bonus/ft_lstlast_bonus.c
 
+OBJF = $(MANDATORY_FILES:.c=.o)
 BONUS_OBJF = $(BONUS_FILES:.c=.o)
 
 CC = cc
 
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -I.
 
 NAME = libft.a
 
@@ -40,8 +47,8 @@ $(NAME): $(OBJF)
 %.o: %.c libft.h
 	@$(CC) $(FLAGS) -c $< -o $@
 
-bonus: $(BONUS_OBJF)
-	@ar rc $(NAME) $(BONUS_OBJF)
+bonus: $(OBJF) $(BONUS_OBJF)
+	@ar rc $(NAME) $(OBJF) $(BONUS_OBJF)
 	@echo BONUS_obj created
 
 clean:
@@ -54,4 +61,4 @@ fclean: clean
 	
 re: fclean all
 
-.PHONY: clean
+.PHONY: all bonus clean fclean re
